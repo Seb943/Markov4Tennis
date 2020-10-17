@@ -130,7 +130,7 @@ MCgame <- function(ppoint_server) {
 }
 
 MCgame2 <- function(ppoint_server) {  
-  #this fuction omits the possibility of infinit deuces : useful to compute only win probs
+  #this fuction omits the possibility of infinite deuces : useful to compute only win probs
   
   ppoint_ret = 1 - ppoint_server
   STATES = c("0-0","0-15","15-0","15-15",
@@ -675,10 +675,6 @@ resTIE <- function (ppoint_srv1, ppoint_srv2, s_tb){
 }
 
 
-phold1 <- resGAME(ppoint_srv1, s0game)[1,"HOLD"]
-phold2 <- resGAME(ppoint_srv2, s0game)[1, "HOLD"]
-ptie1 <- resTIE(ppoint_srv1, ppoint_srv2, s0tb)[1, "SETv1"]
-
 
 s0set <- t(matrix(0, nrow = 41, ncol = 1))
 colnames(s0set) <- c("0-0","0-1","1-0","1-1",
@@ -701,8 +697,6 @@ resSET <- function(phold1, phold2, ptie1, s_set){
   return(resSET)
 }
 
-
-pset_v1 <- resSET( phold1, phold2, ptie1, s0set)[1,"SETv1"]
 
 s0match <- t(c(1, 0, 0, 0, 0, 0, 0, 0, 0, 0))
 colnames(s0match) <- c("0-0","0-1","1-0","1-1","2-0","0-2","2-1","1-2","V1","V2")
@@ -736,6 +730,14 @@ colnames(s0game) <- c("0-0","0-15","15-0","15-15",
 s0game[1,"0-0"] <- 1
 
 resGAME <- function(ppoint_server, s_game, graph = FALSE){
+  # This function computes outcomes probabilities for a service game
+  # ppoint_server : probability that the server wins a point. Between 0 and 1
+  # s_game : state of the game in a Markov sense. If you want to start from 0-0 just take s0game
+  # Otherwise just put 1 in the score you want to start from, e.g. if I want to compute probabilities from 0-15
+  # I just need to set this : s_game <- s0game;s_game[1,'0-0'] <- 0; s_game[1, '0-15'] <- 1
+  # graph : should we display the Markov Chain representation ? boolean
+  #
+  # Output : Markov matrix containing stable states (HOLD or BREAK) probabilities
   MC_game1 <- MCgame2(ppoint_server)  #cause we want only phold 
   if(graph){plot(MC_game1, edge.arrow.size=0.1, vertex.size = 15, main = "Game model")}
   resGAME <- s_game*(MC_game1 ^ 10)
@@ -761,6 +763,15 @@ s0tb[1,"0-0"] <- 1
 
 
 resTIE <- function (ppoint_srv1, ppoint_srv2, s_tb, graph = FALSE){
+  # This function computes outcomes probabilities for a tie-break
+  # ppoint_srv1 : probability that the first player wins a point on his serve. Between 0 and 1
+  # ppoint_srv2 : probability that the second player wins a point on his serve. Between 0 and 1
+  # s_tb : state of the tie-break in a Markov sense. If you want to start from 0-0 just take s0tb
+  # Otherwise just put 1 in the score you want to start from, e.g. if I want to compute probabilities from 2-3
+  # I just need to set this : s_tb <- s0tb;s_tb[1,'0-0'] <- 0; s_tb[1, '2-3'] <- 1
+  # graph : should we display the Markov Chain representation ? boolean
+  #
+  # Output : Markov matrix containing stable states (SETv1 or SETv2) probabilities
   MC_tb <- MCtb2(ppoint_srv1, ppoint_srv2)
   if(graph){plot(MC_tb, edge.arrow.size=0.5, vertex.size = 15, main = "Tie-break model")}
   resTIE <- s_tb*(MC_tb ^ 1000)
@@ -769,11 +780,6 @@ resTIE <- function (ppoint_srv1, ppoint_srv2, s_tb, graph = FALSE){
 }
 
 ########### III. Let's modelize a set  #################
-phold1 <- resGAME(ppoint_srv1, s0game)[1,"HOLD"]
-phold2 <- resGAME(ppoint_srv2, s0game)[1, "HOLD"]
-ptie1 <- resTIE(ppoint_srv1, ppoint_srv2, s0tb)[1, "SETv1"]
-
-
 s0set <- t(matrix(0, nrow = 41, ncol = 1))
 colnames(s0set) <- c("0-0","0-1","1-0","1-1",
                      "2-0","0-2","3-0","2-1",
@@ -788,6 +794,16 @@ colnames(s0set) <- c("0-0","0-1","1-0","1-1",
 s0set[1,"0-0"] <- 1
 
 resSET <- function(phold1, phold2, ptie1, s_set, graph = FALSE){
+  # This function computes outcomes probabilities for a set
+  # phold1 : probability that the first player wins a game on his serve. Between 0 and 1
+  # phold2 : probability that the second player wins a game on his serve. Between 0 and 1
+  # s_set : state of the set in a Markov sense. If you want to start from 0-0 just take s0set
+  # Otherwise just put 1 in the score you want to start from, e.g. if I want to compute probabilities from 2-3
+  # I just need to set this : s_set <- s0set;s_set[1,'0-0'] <- 0; s_set[1, '2-3'] <- 1
+  # NB : player 1 serves first at the beginning of the match
+  # graph : should we display the Markov Chain representation ? boolean
+  #
+  # Output : Markov matrix containing stable states (SETv1 or SETv2) probabilities
   MC_set <- MCset(phold1, phold2, ptie1)
   if(graph){plot(MC_set, edge.arrow.size=0.5, vertex.size = 15, main = "Set model")}
   resSET <- s_set*(MC_set ^ 14)    # max 13 games
@@ -797,12 +813,19 @@ resSET <- function(phold1, phold2, ptie1, s_set, graph = FALSE){
 
 ############# IV. Let's modelize a match ##############
 # probabilities of winning a set : input parameters 
-pset_v1 <- resSET( phold1, phold2, ptie1, s0set)[1,"SETv1"]
-
 s0match <- t(c(1, 0, 0, 0, 0, 0, 0, 0, 0, 0))
 colnames(s0match) <- c("0-0","0-1","1-0","1-1","2-0","0-2","2-1","1-2","V1","V2")
 
 resMATCH <- function(pset_v1, s_match, graph = FALSE){
+  # This function computes outcomes probabilities for a match
+  # pset_v1 : probability that the first player wins a set when the initial score is 0-0. Between 0 and 1
+  # s_match : state of the set in a Markov sense. If you want to start from 0-0 just take s0match
+  # Otherwise just put 1 in the score you want to start from, e.g. if I want to compute probabilities from 1-0
+  # I just need to set this : s_match <- s0match;s_match[1,'0-0'] <- 0; s_match[1, '2-3'] <- 1
+  # NB : player 1 serves first at the beginning of the match
+  # graph : should we display the Markov Chain representation ? boolean
+  #
+  # Output : Markov matrix containing final score (2-0, 2-1, 1-2, 0-2) probabilities
   MC_match <- MCmatch(pset_v1)
   if(graph){plot(MC_match, edge.arrow.size=0.5, vertex.size = 15, main = "Match model")}
   resMATCH <- s_match*(MC_match ^ 5)   # 2 sets 
@@ -812,6 +835,15 @@ resMATCH <- function(pset_v1, s_match, graph = FALSE){
 
 
 resMATCH2 <- function(pset_v1, s_match, graph = FALSE){
+  # This function computes outcomes probabilities for a match
+  # pset_v1 : probability that the first player wins a set when the initial score is 0-0. Between 0 and 1
+  # s_match : state of the set in a Markov sense. If you want to start from 0-0 just take s0match
+  # Otherwise just put 1 in the score you want to start from, e.g. if I want to compute probabilities from 1-0
+  # I just need to set this : s_match <- s0match;s_match[1,'0-0'] <- 0; s_match[1, '2-3'] <- 1
+  # NB : player 1 serves first at the beginning of the match
+  # graph : should we display the Markov Chain representation ? boolean
+  #
+  # Output : Markov matrix containing stable states (V1 or V2) probabilities
   MC_match <- MCmatch2(pset_v1)
   if(graph){plot(MC_match, edge.arrow.size=0.5, vertex.size = 15, main = "Match model")}
   resMATCH <- s_match*(MC_match ^ 5)   # 2 sets 
@@ -819,29 +851,19 @@ resMATCH2 <- function(pset_v1, s_match, graph = FALSE){
   return(resMATCH)
 }
 ############# V. Let's concatenate all of these blocks ##############
-# A. Let's modelize from scratch 
-
-s1match <- s0match
-s1set <- s0set
-s1game <- s0game
-s1tb <- s0tb
-
-ppoint_srv1 <- 0.8
-ppoint_srv2 <- 0.75
-
-phold1 <- resGAME(ppoint_srv1, s0game)[1,"HOLD"]
-phold2 <- resGAME(ppoint_srv2, s0game)[1, "HOLD"]
-ptie1 <- resTIE(ppoint_srv1, ppoint_srv2, s0tb)[1, "SETv1"]
-
-pset_v1 <- resSET( phold1, phold2, ptie1, s0set)[1,"SETv1"]
-
-resTEST <- resMATCH2(pset_v1, s0match)
-resTEST
-
 # B. Then we can modelize during the first set taking only the gamescore (no sub game predictions)
 # First we input the begining score 
 
 predict1 <- function(gamescore, phold1, phold2, ptie1, pset_v1, s0match, s0set, s0game, s0tb){
+  # This function computes outcome probabilities for a match when we are still in the first set
+  # gamescore : state expressed as a chr : e.g. '3-4'. Must belong to s0set states 
+  # phold1 : probability that the player 1 wins a game when serving
+  # phold2 : probability that the player 2 wins a game when serving
+  # ptie1 : probability that the player 1 wins a tie-break
+  # pset_v1 : probability that the player 1 wins a set
+  # s0match, s0set, s0game, s0tb : constants. Do not modify. 
+  # 
+  # Output : Markov matrix containing stable states (V1 or V2) probabilities
   s1match <- s0match
   s1set <- s0set
   s1game <- s0game
@@ -862,6 +884,16 @@ predict1 <- function(gamescore, phold1, phold2, ptie1, pset_v1, s0match, s0set, 
 
 # C. We can modelize during the second set 
 predict2 <- function(setscore, gamescore, phold1, phold2, ptie1, pset_v1, s0match, s0set, s0game, s0tb){
+  # This function computes outcome probabilities for a match when we are in the second set
+  # setscore : state expressed as a chr : e.g. '1-0'. Either '0-1' or '1-0'
+  # gamescore : state expressed as a chr : e.g. '3-4'. Must belong to s0set states 
+  # phold1 : probability that the player 1 wins a game when serving
+  # phold2 : probability that the player 2 wins a game when serving
+  # ptie1 : probability that the player 1 wins a tie-break
+  # pset_v1 : probability that the player 1 wins a set
+  # s0match, s0set, s0game, s0tb : constants. Do not modify. 
+  # 
+  # Output : Markov matrix containing stable states (V1 or V2) probabilities
   s1match <- s0match
   s1set <- s0set
   s1game <- s0game
@@ -898,6 +930,15 @@ predict2 <- function(setscore, gamescore, phold1, phold2, ptie1, pset_v1, s0matc
 
 # D. We can modelize during the third set : this is just one set simulation 
 predict3 <- function(gamescore, phold1, phold2, ptie1, pset_v1, s0match, s0set, s0game, s0tb){
+  # This function computes outcome probabilities for a match when we are in the third set
+  # gamescore : state expressed as a chr : e.g. '3-4'. Must belong to s0set states 
+  # phold1 : probability that the player 1 wins a game when serving
+  # phold2 : probability that the player 2 wins a game when serving
+  # ptie1 : probability that the player 1 wins a tie-break
+  # pset_v1 : probability that the player 1 wins a set
+  # s0match, s0set, s0game, s0tb : constants. Do not modify. 
+  # 
+  # Output : Markov matrix containing stable states (V1 or V2) probabilities
   s1match <- s0match
   s1set <- s0set
   s1game <- s0game
@@ -924,7 +965,15 @@ predict3 <- function(gamescore, phold1, phold2, ptie1, pset_v1, s0match, s0set, 
 
 # E. Then we combine all these subfunctions into a simpler one 
 determiMM <- function(ppoint_srv1, ppoint_srv2, setscore, gamescore, 
-                      ingamesc, server = 1, s0match, s0set, s0game, s0tb){
+                      s0match, s0set, s0game, s0tb){
+  # This function computes outcome probabilities for a match, given the score 
+  # ppoint_srv1 : probability that the player 1 wins a point on his serve
+  # ppoint_srv2 : probability that the player 1 wins a point on his serve
+  # setscore : state expressed as a chr : e.g. '1-0'. Must belong to s0match states
+  # gamescore : state expressed as a chr : e.g. '3-4'. Must belong to s0set states 
+  # s0match, s0set, s0game, s0tb : constants. Do not modify. 
+  # 
+  # Output : Markov matrix containing stable states (V1 or V2) probabilities
   # Computing constants
   phold1 <- resGAME(ppoint_srv1, s0game)[1,"HOLD"]
   phold2 <- resGAME(ppoint_srv2, s0game)[1, "HOLD"]
@@ -933,9 +982,11 @@ determiMM <- function(ppoint_srv1, ppoint_srv2, setscore, gamescore,
   
   
   # Modelization
-  cat("Let's modelize this match from the score...",setscore, gamescore, ingamesc, "and ", server, "serving :", "\n")
+  cat("Let's modelize this match from the score...",setscore, gamescore, "\n")
   if (setscore == "0-0"){resTEST <- predict1(gamescore, phold1, phold2, ptie1, pset_v1, s0match, s0set, s0game, s0tb)}
   if (setscore == "1-1"){resTEST <- predict3(gamescore, phold1, phold2, ptie1, pset_v1, s0match, s0set, s0game, s0tb)}
   if (setscore == "1-0" | setscore == "0-1" ){resTEST <- predict2(setscore, gamescore, phold1, phold2, ptie1, pset_v1, s0match, s0set, s0game, s0tb)}
+  #print(resTEST)
   return(resTEST)
 }
+
