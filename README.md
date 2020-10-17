@@ -1,9 +1,5 @@
 # Markov4Tennis
-:information_source: An R script to modelize a tennis match with Markov chains. The only parameters are the point winning probabilities on serve for a point (2 probabilities : one for p1 and one for p2). Future work :
-- Adapt the code to various sports
-- Create evolving models of Markov Chains (i.e. if the player 1 won the first set then he might be less likely to win the second set, hence we could adapt the model depending on the result of the first games)
-
-:information_source: Markov Chains explained visually [1] 
+:information_source: An R script to modelize a tennis match with Markov chains. Want to know more about Markov Chains ? See [1] for a quick visual overview :100::100:
 
 :information_source: Functionalities :
 - Compute winning probabilities for a game, a set, a tie-break and a match
@@ -22,14 +18,32 @@ resMATCH() | Compute exact set scores probabilities | :heavy_check_mark:
 
 :information_source: The main functions which you can use are the following one : <br />
 ```python
-1.scrape_oddsportal_historical(sport = 'soccer', country = 'france', league = 'ligue-1', start_season = '2010-2011', nseasons = 5, current_season = 'yes', max_page = 25)
-2.scrape_oddsportal_current_season(sport = 'soccer', country = 'finland', league = 'veikkausliiga', season = '2020', max_page = 25)
-3.scrape_oddsportal_specific_season(sport = 'soccer', country = 'finland', league = 'veikkausliiga', season = '2019', max_page = 25)
-4.scrape_oddsportal_next_games(sport = 'tennis', country = 'germany', league = 'exhibition-bett1-aces-berlin-women', season = '2020') 
+1.determiMM(ppoint_srv1 = 0.7, ppoint_srv2 = 0.6, setscore = '1-0', gamescore = '0-3', 
+           s0match, s0set, s0game, s0tb)
+2.resGAME(ppoint_server = 0.7, s_game = s0game, graph = TRUE) 
+3.resTIE(ppoint_srv1 = 0.7, ppoint_srv2= 0.6, s_tb = s0tb, graph = TRUE)
+4.resSET(phold1 = 0.7, phold2 = 0.6, 
+       ptie1 = resTIE(ppoint_srv1 = 0.7, ppoint_srv2= 0.6, s_tb = s0tb, graph = FALSE)[1, "SETv1"], 
+       s_set = s0set, graph = TRUE)
+5.resMATCH(pset_v1 = 0.7, s_match = s0match, graph = TRUE)
 ```
 :information_source: Outputs of the functions : </br> 
-![Scraper_final code](Screenshots/ScreenshotCode.PNG)
-..then console when running code : <br/>
+1.determiMM()
+![Scraper_final code](Images/FinalFunctionOutput.PNG)
+2.resGAME()
+![GameMarkov](Images/GameMarkov.png)
+![GameMarkovOutput](Images/GameMarkovOutput.png)
+3.resTIE()
+![TieBreakMarkov](Images/TieBreakMarkov.png)
+![TieBreakMarkovOutput](Images/TieBreakMarkovOutput.png)
+4.resSET()
+![SetMarkov](Images/SetMarkov.png)
+![SetMarkovOutput](Images/SetMarkovOutput.png)
+5.resMATCH()
+![MatchMarkov](Images/MatchMarkov.png)
+![MatchMarkovOutput](Images/MatchMarkovOutput.png)
+
+</br>
 
 :information_source: Please report any bug/issue in the *issues* section or directly at sebcararo@hotmail.fr (Any feedback is really appreciated :speech_balloon: :+1:)
 
@@ -40,5 +54,9 @@ resMATCH() | Compute exact set scores probabilities | :heavy_check_mark:
 You can also have a look at the *functions.py* source code in order to understand the mechanics and eventually adapt the code to your own purpose. I suggest the reader to start by reading lines from n°722 to the end, because these functions are the most speaking ones and that I commented them to clarify the inputs/outputs and use. 
 
 Markov chains are a great tool for modelizing all many kinds of stochastic process, including statistical physics, information theory, statistics, finance, but also sports modelizations. Several bookmakers use related techniques to predict odds for in the sports betting industry. 
+
+Future work :
+- Adapt the code to various sports
+- Create evolving models of Markov Chains (i.e. if the player 1 won the first set then he might be less likely to win the second set, hence we could adapt the model depending on the result of the first games)
 
 [1] https://setosa.io/ev/markov-chains/ <br />
