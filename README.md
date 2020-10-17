@@ -28,20 +28,20 @@ resMATCH() | Compute exact set scores probabilities | :heavy_check_mark:
 5.resMATCH(pset_v1 = 0.7, s_match = s0match, graph = TRUE)
 ```
 :information_source: Outputs of the functions : </br> 
-1.determiMM()
-![Scraper_final code](Images/FinalFunctionOutput.PNG)
-2.resGAME()
-![GameMarkov](Images/GameMarkov.png)
-![GameMarkovOutput](Images/GameMarkovOutput.png)
-3.resTIE()
-![TieBreakMarkov](Images/TieBreakMarkov.png)
-![TieBreakMarkovOutput](Images/TieBreakMarkovOutput.png)
-4.resSET()
-![SetMarkov](Images/SetMarkov.png)
-![SetMarkovOutput](Images/SetMarkovOutput.png)
-5.resMATCH()
-![MatchMarkov](Images/MatchMarkov.png)
-![MatchMarkovOutput](Images/MatchMarkovOutput.png)
+1.determiMM()</br> 
+![Scraper_final code](Images/FinalFunctionOutput.PNG)</br> 
+2.resGAME()</br> 
+![GameMarkov](Images/GameMarkov.png)</br> 
+![GameMarkovOutput](Images/GameMarkovOutput.png)</br> 
+3.resTIE()</br> 
+![TieBreakMarkov](Images/TieBreakMarkov.png)</br> 
+![TieBreakMarkovOutput](Images/TieBreakMarkovOutput.png)</br> 
+4.resSET()</br> 
+![SetMarkov](Images/SetMarkov.png)</br> 
+![SetMarkovOutput](Images/SetMarkovOutput.png)</br> 
+5.resMATCH()</br> 
+![MatchMarkov](Images/MatchMarkov.png)</br> 
+![MatchMarkovOutput](Images/MatchMarkovOutput.png)</br> 
 
 </br>
 
