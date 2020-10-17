@@ -1,5 +1,5 @@
 # Markov4Tennis
-:information_source: An R script to modelize a tennis match with Markov chains. Want to know more about Markov Chains ? See [1] for a quick visual overview :100::100:
+:information_source: An R script to modelize a tennis match with Markov chains. Want to know more about Markov Chains ? See [1] for a quick visual overview :100::100:. To use this work, just open the *Markov.R* script :thumbsup:. 
 
 :information_source: Functionalities :
 - Compute winning probabilities for a game, a set, a tie-break and a match
@@ -27,7 +27,7 @@ resMATCH() | Compute exact set scores probabilities | :heavy_check_mark:
        s_set = s0set, graph = TRUE)
 5.resMATCH(pset_v1 = 0.7, s_match = s0match, graph = TRUE)
 ```
-:information_source: Outputs of the functions : </br> 
+:information_source: Outputs of the functions (extra-documentation can be found in the *functions.R* script): </br> 
 1.determiMM()</br> 
 ![Scraper_final code](Images/FinalFunctionOutput.PNG)</br> 
 2.resGAME()</br> 
