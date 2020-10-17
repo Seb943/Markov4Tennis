@@ -17,7 +17,7 @@ resSET() | Compute set winning probabilities |:heavy_check_mark:
 resMATCH() | Compute exact set scores probabilities | :heavy_check_mark: 
 
 :information_source: The main functions which you can use are the following one : <br />
-```python
+```R
 1.determiMM(ppoint_srv1 = 0.7, ppoint_srv2 = 0.6, setscore = '1-0', gamescore = '0-3', 
            s0match, s0set, s0game, s0tb)
 2.resGAME(ppoint_server = 0.7, s_game = s0game, graph = TRUE) 
@@ -31,17 +31,17 @@ resMATCH() | Compute exact set scores probabilities | :heavy_check_mark:
 1.determiMM()</br> 
 ![Scraper_final code](Images/FinalFunctionOutput.PNG)</br> 
 2.resGAME()</br> 
-![GameMarkov](Images/GameMarkov.png)</br> 
 ![GameMarkovOutput](Images/GameMarkovOutput.png)</br> 
+![GameMarkov](Images/GameMarkov.png)</br> 
 3.resTIE()</br> 
-![TieBreakMarkov](Images/TieBreakMarkov.png)</br> 
 ![TieBreakMarkovOutput](Images/TieBreakMarkovOutput.png)</br> 
+![TieBreakMarkov](Images/TieBreakMarkov.png)</br> 
 4.resSET()</br> 
-![SetMarkov](Images/SetMarkov.png)</br> 
 ![SetMarkovOutput](Images/SetMarkovOutput.png)</br> 
+![SetMarkov](Images/SetMarkov.png)</br> 
 5.resMATCH()</br> 
-![MatchMarkov](Images/MatchMarkov.png)</br> 
 ![MatchMarkovOutput](Images/MatchMarkovOutput.png)</br> 
+![MatchMarkov](Images/MatchMarkov.png)</br> 
 
 </br>
 
