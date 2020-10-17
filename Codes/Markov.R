@@ -31,7 +31,7 @@ resGAME(ppoint_server = 0.7, s_game = s0game, graph = TRUE)
 s_game <- s0game;s_game[1,'0-0'] <- 0; s_game[1, '0-15'] <- 1
 resGAME(ppoint_server = 0.7, 
         s_game = s_game, 
-        graph = TRUE) 
+        graph = FALSE) 
 
 
 # II - Compute tie-break winning probabilities if score is s_tb
@@ -41,7 +41,7 @@ resTIE(ppoint_srv1 = 0.7, ppoint_srv2= 0.6, s_tb = s0tb, graph = TRUE)
 # (b) Another example : Starting from 3-4
 s_tb <- s0tb;s_tb[1,'0-0'] <- 0; s_tb[1, '3-4'] <- 1
 resTIE(ppoint_srv1 = 0.7, ppoint_srv2= 0.6, 
-       s_tb = s_tb, graph = TRUE)
+       s_tb = s_tb, graph = FALSE)
 
 # III - Compute set winning probabilities if score is s_set
 # (a) Starting from 0-0
@@ -53,7 +53,7 @@ resSET(phold1 = 0.7, phold2 = 0.6,
 s_set <- s0set;s_set[1,'0-0'] <- 0; s_set[1, '4-5'] <- 1
 resSET(phold1 = 0.7, phold2 = 0.6, 
        ptie1 = resTIE(ppoint_srv1 = 0.7, ppoint_srv2= 0.6, s_tb = s0tb, graph = FALSE)[1, "SETv1"], 
-       s_set = s_set, graph = TRUE)
+       s_set = s_set, graph = FALSE)
 
 # IV - Compute match winning probabilities if score is s_match
 # (a) Starting from 0-0
@@ -61,8 +61,9 @@ resMATCH(pset_v1 = 0.7, s_match = s0match, graph = TRUE)
 
 # (b) Another example : Starting from 0-1
 s_match <- s0match;s_match[1,'0-0'] <- 0; s_match[1, '0-1'] <- 1
-resMATCH(pset_v1 = 0.7, s_match = s_match, graph = TRUE)
+resMATCH(pset_v1 = 0.7, s_match = s_match, graph = FALSE)
 
 # V -  Finally, we can use the function to compute probabilities of victory from a given score
 determiMM(ppoint_srv1 = 0.7, ppoint_srv2 = 0.6, setscore = '1-0', gamescore = '0-3', 
            s0match, s0set, s0game, s0tb)
+
