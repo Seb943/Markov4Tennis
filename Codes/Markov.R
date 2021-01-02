@@ -45,13 +45,15 @@ resTIE(ppoint_srv1 = 0.7, ppoint_srv2= 0.6,
 
 # III - Compute set winning probabilities if score is s_set
 # (a) Starting from 0-0
-resSET(phold1 = 0.7, phold2 = 0.6, 
+resSET(phold1 = resGAME(ppoint_server = 0.7, s_game = s0game, graph = TRUE)[1, "HOLD"] , 
+       phold2 = resGAME(ppoint_server = 0.6, s_game = s0game, graph = TRUE)[1, "HOLD"] , 
        ptie1 = resTIE(ppoint_srv1 = 0.7, ppoint_srv2= 0.6, s_tb = s0tb, graph = FALSE)[1, "SETv1"], 
        s_set = s0set, graph = TRUE)
 
 # (b) Another example : Starting from 4-5
 s_set <- s0set;s_set[1,'0-0'] <- 0; s_set[1, '4-5'] <- 1
-resSET(phold1 = 0.7, phold2 = 0.6, 
+resSET(phold1 = resGAME(ppoint_server = 0.7, s_game = s0game, graph = TRUE)[1, "HOLD"], 
+       phold2 = resGAME(ppoint_server = 0.6, s_game = s0game, graph = TRUE)[1, "HOLD"], 
        ptie1 = resTIE(ppoint_srv1 = 0.7, ppoint_srv2= 0.6, s_tb = s0tb, graph = FALSE)[1, "SETv1"], 
        s_set = s_set, graph = FALSE)
 
