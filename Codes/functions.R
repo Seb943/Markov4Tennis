@@ -514,7 +514,7 @@ predict1 <- function(gamescore, phold1, phold2, ptie1, pset_v1, s0match, s0set, 
   s1match[1,"0-1"] <- resSET( phold1, phold2, ptie1, s1set)[1,"SETv2"]
   s1match[1, "0-0"] <- 0
   
-  resTEST <- resMATCH2(pset_v1, s1match)
+  resTEST <- resMATCH(pset_v1, s1match)
   
   return(resTEST)
 }
@@ -548,7 +548,7 @@ predict2 <- function(setscore, gamescore, phold1, phold2, ptie1, pset_v1, s0matc
     s1match[1,"1-1"] <- resSET( phold1, phold2, ptie1, s1set)[1,"SETv2"]
     s1match[1, "1-0"] <- 0
     
-    resTEST <- resMATCH2(pset_v1, s1match)
+    resTEST <- resMATCH(pset_v1, s1match)
     resMATCH(pset_v1, s1match)
   }
   
@@ -558,7 +558,7 @@ predict2 <- function(setscore, gamescore, phold1, phold2, ptie1, pset_v1, s0matc
     s1match[1, "0-1"] <- 0
     
     
-    resTEST <- resMATCH2(pset_v1, s1match)
+    resTEST <- resMATCH(pset_v1, s1match)
     resMATCH(pset_v1, s1match)
     
   }
@@ -594,7 +594,7 @@ predict3 <- function(gamescore, phold1, phold2, ptie1, pset_v1, s0match, s0set, 
   s1match[1,"1-2"] <- resSET( phold1, phold2, ptie1, s1set)[1,"SETv2"]
   s1match[1, "1-1"] <- 0
   
-  resTEST <- resMATCH2(pset_v1, s1match)
+  resTEST <- resMATCH(pset_v1, s1match)
   resMATCH(pset_v1, s1match)
   
   return(resTEST)
