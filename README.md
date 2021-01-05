@@ -1,6 +1,8 @@
 # Markov4Tennis
 :information_source: An R script to modelize a tennis match with Markov chains. Want to know more about Markov Chains ? See [1] for a quick visual overview :100::100:. To use this work, just open the *Markov.R* script :thumbsup:. 
 
+:information_source: Medium article : https://medium.com/analytics-vidhya/modelizing-a-tennis-match-with-markov-chains-b59ca2b5f5bf 
+
 :information_source: Functionalities :
 - Compute winning probabilities for a game, a set, a tie-break and a match
 - Compute winning probabilities for already started match
