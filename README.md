@@ -47,7 +47,8 @@ resMATCH() | Compute exact set scores probabilities | :heavy_check_mark:
 
 </br>
 
-:information_source: Please report any bug/issue in the *issues* section or directly at sebcararo@hotmail.fr (Any feedback is really appreciated :speech_balloon: :+1:). A :star2: is also greatly appreciated :raised_hands:. </br>
+:information_source: Please report any bug/issue in the *issues* section or directly at sebcararo@hotmail.fr. Any feedback is really appreciated :speech_balloon: :+1:. </br>
+
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
